@@ -23,6 +23,7 @@ public class SyncEngine {
 
     public void runFullSync(){
         System.out.println("Running full sync...");
+        sync(true);
     }
 
     public void sync(boolean fullSync){

@@ -66,7 +66,7 @@ public class CLI {
 
    private void setDestination() {
       System.out.print("Enter destination directory: ");
-      settings.setSource(scanner.nextLine());
+      settings.setDestination(scanner.nextLine());
    }
 
    private void setSource() {
