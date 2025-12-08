@@ -12,11 +12,16 @@ public class FileScanner {
         Map<String, FileMetadata> files = new HashMap<>();
 
         try {
-            Files.walk(Paths.get(directory)).filter(Files::isRegularFile).forEach(path -> {
+            Files.walk(Paths.get(directory)).forEach(path -> {
                 try {
-                    long modified = Files.getLastModifiedTime(path).toMillis();
-                    String hash = HashUtil.hashFile(path, "SHA-256");
-                    files.put(path.toString(), new FileMetadata(path, modified, hash));
+                    if (Files.isRegularFile(path)) {
+                        long modified = Files.getLastModifiedTime(path).toMillis();
+                        String hash = HashUtil.hashFile(path, "SHA-256");
+                        files.put(path.toString(), new FileMetadata(path, modified, hash, false));
+                    }else if(Files.isDirectory(path)){
+                        long modified = Files.getLastModifiedTime(path).toMillis();
+                        files.put(path.toString(), new FileMetadata(path, modified, null, true));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

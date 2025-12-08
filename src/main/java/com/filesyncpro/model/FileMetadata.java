@@ -7,11 +7,13 @@ public class FileMetadata {
     private Path path;
     private long lastModified;
     private String hash;
+    private final boolean isDirectory;
 
-    public FileMetadata(Path path, long lastModified, String hash){
+    public FileMetadata(Path path, long lastModified, String hash, boolean isDirectory){
         this.path = path;
         this.lastModified = lastModified;
         this.hash = hash;
+        this.isDirectory = isDirectory;
     }
 
     public Path getPath(){
@@ -24,5 +26,9 @@ public class FileMetadata {
 
     public String getHash(){
         return hash;
+    }
+
+    public boolean isDirectory(){
+        return isDirectory;
     }
 }
