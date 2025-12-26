@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import main.java.com.filesyncpro.config.Settings;
+import main.java.com.filesyncpro.controllers.AppController;
+
 import java.io.File;
 
 public class App extends Application {
@@ -27,12 +30,23 @@ public class App extends Application {
         grid.setHgap(10);
         grid.setVgap(15);
 
+        Settings settings = new Settings();
+        AppController controller = new AppController(settings);
+
         // Source Row
         Label lblSource = new Label("Source: ");
         TextField txtSource = new TextField();
         txtSource.setPrefWidth(350);
         Button btnBrowseSource = new Button("Browse...");
-        btnBrowseSource.setOnAction(e -> selectDirectory(primaryStage, txtSource));
+        // btnBrowseSource.setOnAction(e -> selectDirectory(primaryStage, txtSource));
+
+        btnBrowseSource.setOnAction(e -> {
+            String path = selectDirectory(primaryStage);
+            if (path != null) {
+                txtSource.setText(path);
+                controller.setSource(path);
+            }
+        });
 
         grid.add(lblSource, 0, 0);
         grid.add(txtSource, 1, 0);
@@ -42,7 +56,15 @@ public class App extends Application {
         Label lblDest = new Label("Destination: ");
         TextField txtDest = new TextField();
         Button btnBrowseDest = new Button("Browse...");
-        btnBrowseDest.setOnAction(e -> selectDirectory(primaryStage, txtDest));
+        // btnBrowseDest.setOnAction(e -> selectDirectory(primaryStage, txtDest));
+
+        btnBrowseDest.setOnAction(e -> {
+            String path = selectDirectory(primaryStage);
+            if (path != null) {
+                txtDest.setText(path);
+                controller.setDestination(path);
+            }
+        });
 
         grid.add(lblDest, 0, 1);
         grid.add(txtDest, 1, 1);
@@ -55,6 +77,23 @@ public class App extends Application {
         Button btnIncr = new Button("Incremental Sync");
         Button btnFull = new Button("Full Sync");
         Button btnExit = new Button("Exit");
+
+        btnIncr.setOnAction(e -> {
+            if (txtSource.getText().isEmpty() || txtDest.getText().isEmpty()) {
+                showError("Please select both source and destination.");
+                return;
+            }
+            controller.incrementalSync();
+        });
+
+        btnFull.setOnAction(e -> {
+            if (txtSource.getText().isEmpty() || txtDest.getText().isEmpty()) {
+                showError("Please select both source and destination.");
+                return;
+            }
+            controller.fullSync();
+        });
+
         btnExit.setOnAction(e -> primaryStage.close());
 
         // Exit button spacer
@@ -73,10 +112,24 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    private void selectDirectory(Stage stage, TextField target) {
+    // private void selectDirectory(Stage stage, TextField target) {
+    // DirectoryChooser dc = new DirectoryChooser();
+    // File selected = dc.showDialog(stage);
+    // if (selected != null)
+    // target.setText(selected.getAbsolutePath());
+    // }
+
+    private String selectDirectory(Stage stage) {
         DirectoryChooser dc = new DirectoryChooser();
         File selected = dc.showDialog(stage);
-        if (selected != null)
-            target.setText(selected.getAbsolutePath());
+        return selected != null ? selected.getAbsolutePath() : null;
     }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
 }
