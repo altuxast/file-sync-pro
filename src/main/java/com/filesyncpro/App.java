@@ -9,15 +9,10 @@ import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
-// import main.java.com.filesyncpro.cli.CLI;
 
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // CLI
-        // CLI cli = new CLI();
-        // cli.start();
-
         // Root Container
         VBox root = new VBox(15);
         root.setPadding(new Insets(20));
