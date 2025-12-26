@@ -1,2 +1,17 @@
-# Ignore compiled binaries
+# Ignore compiled Java files
+*.class
+
+# Ignore build directories
 bin/
+target/
+build/
+
+# Ignore JavaFX SDK (adjust the path if yours is different)
+javafx-sdk-*/
+lib/*.jar
+
+# Ignore IDE-specific folders
+.vscode/
+.settings/
+.classpath
+.project
