@@ -17,7 +17,6 @@ import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-        // This launches the App class defined above
         Application.launch(App.class, args); 
     }
 }
