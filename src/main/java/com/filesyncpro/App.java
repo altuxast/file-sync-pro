@@ -76,6 +76,7 @@ public class App extends Application {
 
         Button btnIncr = new Button("Incremental Sync");
         Button btnFull = new Button("Full Sync");
+        Button btnScheduled = new Button("Scheduled Sync");
         Button btnExit = new Button("Exit");
 
         btnIncr.setOnAction(e -> {
@@ -94,13 +95,38 @@ public class App extends Application {
             controller.fullSync();
         });
 
+        btnScheduled.setOnAction(e -> {
+            if (txtSource.getText().isEmpty() || txtDest.getText().isEmpty()) {
+                showError("Please select both source and destination.");
+                return;
+            }
+
+            TextInputDialog dialog = new TextInputDialog("5");
+            dialog.setTitle("Scheduled Sync");
+            dialog.setHeaderText("Schedule Synchronization");            
+            dialog.setContentText("Enter interval (minutes)");
+
+            dialog.showAndWait().ifPresent(input -> {
+                try {
+                    int minutes = Integer.parseInt(input);
+                    if (minutes <= 0){
+                        showError("Please enter a number greater than 0.");                        
+                        return;
+                    }
+                    controller.scheduledSync(minutes);
+                } catch (NumberFormatException ex) {
+                    showError("Invalid number format.");
+                }
+            });
+        });
+
         btnExit.setOnAction(e -> primaryStage.close());
 
         // Exit button spacer
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        buttonBar.getChildren().addAll(btnIncr, btnFull, spacer, btnExit);
+        buttonBar.getChildren().addAll(btnIncr, btnFull, btnScheduled, spacer, btnExit);
 
         root.getChildren().addAll(headerLabel, headSeparator, grid, new Separator(), buttonBar);
 

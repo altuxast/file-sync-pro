@@ -32,10 +32,10 @@ public class AppController {
         info("Full sync completed.");
     }
 
-    // public void scheduledSync(int minutes){
-    //     new Scheduler(settings).schedule(minutes);
-    //     info("Scheduled sync every " + minutes + " minutes. ");
-    // }
+    public void scheduledSync(int minutes){
+        new Scheduler(settings).schedule(minutes);
+        info("Scheduled sync every " + minutes + " minutes. ");
+    }
 
     private void info(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
