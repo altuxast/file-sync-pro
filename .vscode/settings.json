@@ -14,6 +14,10 @@
         "c:\\javafx\\javafx-sdk-25.0.1\\lib\\javafx-swt.jar",
         "c:\\javafx\\javafx-sdk-25.0.1\\lib\\jdk.jsobject.jar",
         "c:\\javafx\\javafx-sdk-25.0.1\\lib\\jfx.incubator.input.jar",
-        "c:\\javafx\\javafx-sdk-25.0.1\\lib\\jfx.incubator.richtext.jar"
+        "c:\\javafx\\javafx-sdk-25.0.1\\lib\\jfx.incubator.richtext.jar",
+        "libs/bcpkix-jdk18on-1.83.jar",
+        "libs/bcprov-jdk18on-1.83.jar",
+        "libs/slf4j-api-2.0.17.jar",
+        "libs/sshj-0.40.0.jar"
     ]
 }
